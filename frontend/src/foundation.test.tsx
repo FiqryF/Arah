@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { beforeEach, expect, test, vi } from 'vitest'
@@ -8,6 +8,21 @@ import { checkHealth } from './lib/api'
 
 beforeEach(() => vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('/db') ? { status: 'ok', database: 'connected' } : { status: 'ok', service: 'ARAH API' } }))))
 function open(path = '/app/dashboard') { return render(<Preferences><RouterProvider router={createMemoryRouter(routes, { initialEntries: [path] })}/></Preferences>) }
+test('mobile navigation keeps ARAH destinations and updates its active link and translated names', async () => {
+  open()
+  const user = userEvent.setup()
+  const navigation = screen.getByRole('navigation', { name: 'Navigasi utama' })
+  expect(within(navigation).getAllByRole('link')).toHaveLength(5)
+  expect(within(navigation).getByRole('link', { name: 'Beranda' })).toHaveAttribute('aria-current', 'page')
+  await user.click(within(navigation).getByRole('link', { name: 'Rencana tugas' }))
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Rencana tugas')
+  expect(within(navigation).getByRole('link', { name: 'Rencana tugas' })).toHaveAttribute('aria-current', 'page')
+  expect(within(navigation).getByRole('link', { name: 'Beranda' })).not.toHaveAttribute('aria-current')
+  await user.click(within(navigation).getByRole('link', { name: 'Pengaturan' }))
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Bahasa' }), 'en')
+  expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument()
+  expect(within(navigation).getByRole('link', { name: 'Settings' })).toHaveAttribute('aria-current', 'page')
+})
 test('preference context remains stable when its parent rerenders without preference changes', () => {
   let captured: ReturnType<typeof usePreferences> | undefined
   function Probe() { captured = usePreferences(); return null }

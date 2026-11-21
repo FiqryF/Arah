@@ -140,7 +140,7 @@ npm audit --audit-level=moderate
 .\.venv\Scripts\python.exe -m pip check
 ```
 
-Four database tests skip unless `ARAH_TEST_DATABASE` is set. To run them, set `DATABASE_URL` to a **dedicated** migrated database, such as `arah_test`. Existing environment variables override `.env`. Tests roll back their inserted rows. The complete suite currently has 24 frontend tests and 9 backend tests, including stable preference context, timezone and ERD/schema checks.
+Four database tests skip unless `ARAH_TEST_DATABASE` is set. To run them, set `DATABASE_URL` to a **dedicated** migrated database, such as `arah_test`. Existing environment variables override `.env`. Tests roll back their inserted rows. The complete suite currently has 25 frontend tests and 9 backend tests, including mobile navigation, stable preference context, timezone and ERD/schema checks.
 
 ```powershell
 # From backend, using your own local credentials:
@@ -164,6 +164,8 @@ node scripts/browser-smoke.cjs
 ```
 
 Set `CHROME_PATH` if Chrome is installed somewhere other than the script's Windows default. Checks use real Fetch/CORS/API/PostgreSQL, test 390px/1440px layouts, theme/language persistence, Swagger, overflow and browser errors. Screenshots are saved to `docs/reports/evidence/`. This is a smoke test, not a complete accessibility audit.
+
+For the mobile liquid-glass navigation, run `node scripts/mobile-nav-smoke.cjs` from root. It checks eight scenarios at 320/390/768/1440px, active links, accessible names, 44px touch targets, keyboard focus, reduced motion, light/dark themes and Indonesian/English, plus indicator motion, interruption and resize. Five user tabs remain Dashboard, Task planner, PULIH, REST and Settings; admin tabs use the existing admin destinations. The active capsule has a consistent width across menus (132px at 390px, adapting to 92px at 320px) and shows its label beside the icon; inactive tabs show only icons. Button height is 46px. The previous glass capsule shrinks and fades in place, relocates while invisible, then grows and fades in at the selected tab (340ms); icon positions use FLIP transforms. Other modules remain accessible from the dashboard.
 
 ## This workspace's local PostgreSQL
 
