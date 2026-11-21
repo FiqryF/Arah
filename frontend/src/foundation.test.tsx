@@ -8,6 +8,15 @@ import { checkHealth } from './lib/api'
 
 beforeEach(() => vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('/db') ? { status: 'ok', database: 'connected' } : { status: 'ok', service: 'ARAH API' } }))))
 function open(path = '/app/dashboard') { return render(<Preferences><RouterProvider router={createMemoryRouter(routes, { initialEntries: [path] })}/></Preferences>) }
+test('preference context remains stable when its parent rerenders without preference changes', () => {
+  let captured: ReturnType<typeof usePreferences> | undefined
+  function Probe() { captured = usePreferences(); return null }
+  const view = render(<Preferences><Probe/></Preferences>)
+  const initialValue = captured
+  expect(initialValue).toBeDefined()
+  view.rerender(<Preferences><Probe/></Preferences>)
+  expect(captured).toBe(initialValue)
+})
 test('user timezone is Jakarta and a UTC instant crosses midnight correctly', () => {
   function Probe() {
     const { timezone } = usePreferences()

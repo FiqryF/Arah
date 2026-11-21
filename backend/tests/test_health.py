@@ -41,7 +41,7 @@ def test_cors():
 
 
 def test_real_unreachable_database_returns_503():
-    engine = create_engine("postgresql+psycopg://unused:unused@127.0.0.1:1/unused", connect_args={"connect_timeout": 1})
+    engine = create_engine("postgresql+psycopg://unused@127.0.0.1:1/unused", connect_args={"connect_timeout": 1})
     app = create_app()
 
     def unavailable_session():

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { messages, type MessageKey } from '../../locales/messages'
 
 type Theme = 'light' | 'dark'
@@ -13,12 +13,16 @@ const Context = createContext<{
   t: (key: MessageKey) => string
 } | null>(null)
 
-export function Preferences({ children }: { children: ReactNode }) {
+export function Preferences({ children }: Readonly<{ children: ReactNode }>) {
   const [theme, setTheme] = useState<Theme>(() => read('arah-theme') === 'dark' ? 'dark' : 'light')
   const [language, setLanguage] = useState<Language>(() => read('arah-language') === 'en' ? 'en' : 'id')
   useEffect(() => { document.documentElement.dataset.theme = theme; save('arah-theme', theme) }, [theme])
   useEffect(() => { document.documentElement.lang = language; save('arah-language', language) }, [language])
-  return <Context.Provider value={{ theme, setTheme, language, setLanguage, timezone: DEFAULT_USER_TIMEZONE, t: key => messages[language][key] }}>{children}</Context.Provider>
+  const value = useMemo(() => ({
+    theme, setTheme, language, setLanguage, timezone: DEFAULT_USER_TIMEZONE,
+    t: (key: MessageKey) => messages[language][key],
+  }), [theme, language])
+  return <Context.Provider value={value}>{children}</Context.Provider>
 }
 export function usePreferences() {
   const value = useContext(Context)

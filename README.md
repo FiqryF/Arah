@@ -140,7 +140,7 @@ npm audit --audit-level=moderate
 .\.venv\Scripts\python.exe -m pip check
 ```
 
-Four database tests skip unless `ARAH_TEST_DATABASE` is set. To run them, set `DATABASE_URL` to a **dedicated** migrated database, such as `arah_test`. Existing environment variables override `.env`. Tests roll back their inserted rows. The complete suite currently has 23 frontend tests and 9 backend tests, including timezone and ERD/schema checks.
+Four database tests skip unless `ARAH_TEST_DATABASE` is set. To run them, set `DATABASE_URL` to a **dedicated** migrated database, such as `arah_test`. Existing environment variables override `.env`. Tests roll back their inserted rows. The complete suite currently has 24 frontend tests and 9 backend tests, including stable preference context, timezone and ERD/schema checks.
 
 ```powershell
 # From backend, using your own local credentials:

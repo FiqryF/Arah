@@ -5,9 +5,8 @@
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; background: radial-gradient(ellipse at 90% 0%, #83b9a329, transparent 55%); min-height: 100vh; }
 button, select, a { -webkit-tap-highlight-color: transparent; }
-button, select { font: inherit; color: inherit; cursor: pointer; }
+button, select { font: inherit; color: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); min-height: 44px; padding: 10px 14px; }
 a { color: inherit; text-decoration: none; }
-button, select { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); min-height: 44px; padding: 10px 14px; }
 button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.7rem); line-height: 1.1; letter-spacing: -.035em; max-width: 680px; margin: 22px 0; }

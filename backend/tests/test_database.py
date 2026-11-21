@@ -80,7 +80,9 @@ def test_defaults_constraints_and_timestamp():
                 ),
                 values,
             ).one()
-            assert row.role == "user" and row.onboarding_completed is False and row.password_hash is None
+            assert row.role == "user"
+            assert row.onboarding_completed is False
+            assert row.password_hash is None
             connection.execute(text("SELECT pg_sleep(0.01)"))
             changed = connection.execute(
                 text("UPDATE users SET display_name='Test' WHERE id=:id RETURNING updated_at"), {"id": uid}
@@ -91,9 +93,10 @@ def test_defaults_constraints_and_timestamp():
                 ("UPDATE users SET role='owner' WHERE id=:id", {"id": uid}),
                 ("UPDATE users SET email=NULL WHERE id=:id", {"id": uid}),
             ]:
+                statement = text(sql)
                 with connection.begin_nested() as savepoint:
                     with pytest.raises(IntegrityError):
-                        connection.execute(text(sql), params)
+                        connection.execute(statement, params)
                     savepoint.rollback()
         finally:
             transaction.rollback()

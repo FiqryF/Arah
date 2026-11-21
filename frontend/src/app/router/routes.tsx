@@ -6,7 +6,7 @@ import type { MessageKey } from '../../locales/messages'
 
 function PublicShell() { return <div className="public-shell"><header><Brand/><Controls/></header><main><Outlet/></main></div> }
 function Landing() { const { t } = usePreferences(); return <section className="landing glass"><span className="eyebrow">{t('foundation')}</span><h1>{t('welcome')}</h1><p>{t('intro')}</p><Link className="primary-button" to="/app/dashboard">{t('open')} ↗</Link><div className="public-links"><Link to="/login">{t('login')}</Link><Link to="/register">{t('register')}</Link></div></section> }
-function Placeholder({ page, auth = false }: { page: MessageKey; auth?: boolean }) { const { t } = usePreferences(); return <section className="intro"><span className="eyebrow">ARAH / {t('foundation')}</span><h1>{t(page)}</h1><div className="glass placeholder"><p>{t(auth ? 'authPending' : 'placeholder')}</p></div></section> }
+function Placeholder({ page, auth = false }: Readonly<{ page: MessageKey; auth?: boolean }>) { const { t } = usePreferences(); return <section className="intro"><span className="eyebrow">ARAH / {t('foundation')}</span><h1>{t(page)}</h1><div className="glass placeholder"><p>{t(auth ? 'authPending' : 'placeholder')}</p></div></section> }
 export const routes = [
   { element: <PublicShell/>, children: [{ path: '/', element: <Landing/> }, { path: '/login', element: <Placeholder page="login" auth/> }, { path: '/register', element: <Placeholder page="register" auth/> }, { path: '*', element: <Placeholder page="notFound"/> }] },
   { path: '/app', element: <AppShell/>, children: [{ index: true, element: <Dashboard/> }, ...userPages.map(page => ({ path: page, element: page === 'dashboard' ? <Dashboard/> : <Placeholder page={page}/> }))] },
