@@ -1,0 +1,46 @@
+export const landing = {
+  id: {
+    moduleNav: 'Modul', pickerHint: 'Pilih modul untuk melihat kegunaannya.',
+    moduleNames: ['Tugas', 'PULIH', 'REST', 'NOURISH', 'Energi', 'Asisten', 'Dapur', 'Laporan'],
+    nav: ['Beranda', 'Fitur', 'Cara Kerja', 'Tentang'], menu: 'Menu', primary: 'Mulai Sekarang', explore: 'Jelajahi Fitur',
+    eyebrow: 'HIDUPMU, DALAM KESEIMBANGAN.', hero: 'Atur tugas sesuai energimu, kenali suasana hati, dan rencanakan waktu untuk istirahat serta makan.', photo: 'Danau tenang di antara gunung berhutan yang diselimuti kabut.',
+    intro: 'Satu ruang untuk hidup yang lebih seimbang.', introText: 'Satukan tugas, suasana hati, tidur, nutrisi, dan energi harian. ARAH membantu kamu membuat keputusan sesuai kapasitasmu, sehingga setiap langkah terasa lebih realistis.',
+    benefitsTitle: 'Ritme harian yang lebih masuk akal.', benefits: [['Rencanakan lebih cerdas', 'Susun tugas sesuai tenggat, waktu, dan energi yang tersedia.'], ['Kenali perasaanmu', 'Amati suasana hati, stres, dan energi melalui check-in singkat.'], ['Istirahat lebih baik', 'Bangun rutinitas tidur dan pahami pola istirahatmu.'], ['Makan dengan sadar', 'Temukan ide makan sesuai anggaran, waktu, dan bahan yang ada.']],
+    features: 'Apa yang ingin kamu atur hari ini?', modules: [
+      ['Adaptive Task Planner', 'Pilih tugas yang masuk akal.', 'Susun prioritas berdasarkan tenggat, waktu, dan energi yang tersedia.'],
+      ['PULIH', 'Beri ruang untuk pulih.', 'Catat suasana hati dan stres, lalu jelajahi kegiatan pemulihan nonklinis.'],
+      ['REST', 'Bangun ritme tidur.', 'Pantau durasi tidur dan buat target yang realistis.'],
+      ['NOURISH', 'Temukan ide makan praktis.', 'Jelajahi pilihan berdasarkan nutrisi, waktu memasak, anggaran, dan bahan.'],
+      ['Personal Energy Budget', 'Sesuaikan beban dengan energi.', 'Lihat kapasitas harian dan rencanakan beban kerja yang bisa dijalani.'],
+      ['Smart Decision Assistant', 'Temukan langkah berikutnya.', 'Lihat saran tindakan dan alasan mengapa saran itu relevan dengan kondisimu.'],
+      ['Smart Meal Budget & Pantry', 'Masak dengan bahan yang ada.', 'Kelola stok, lihat bahan yang kurang, dan perkirakan biaya makan.'],
+      ['Weekly Life Balance Report', 'Lihat pola dalam satu minggu.', 'Tinjau tugas, tidur, suasana hati, energi, dan pilihan makan.'],
+    ],
+    how: 'Mulai dari kondisimu hari ini.', steps: [['Check-in', 'Ceritakan perasaanmu, energi, dan waktu yang tersedia.'], ['Rencanakan harimu', 'Atur kegiatan dan pertimbangkan saran yang sesuai dengan kondisimu.'], ['Temukan keseimbangan', 'Atur tugas, istirahat, dan makan, lalu lihat perkembanganmu.']],
+    why: 'Mengapa ARAH?', whyText: 'Kapasitasmu berubah dari hari ke hari. ARAH dirancang untuk menyatukan rencana sesuai energi, saran sesuai situasi, pilihan makan sesuai anggaran, dan ringkasan kemajuan setiap minggu.', trust: 'Privasi dan kesejahteraan', trustText: 'Catatan kesejahteraan dirancang untuk tetap pribadi dan berada dalam kendali pengguna. Saran bersifat nonklinis. ARAH mendukung kebiasaan seimbang dan tidak melakukan diagnosis medis atau psikologis.',
+    final: 'Hari yang lebih baik dimulai dari ARAH.', finalText: 'Ambil langkah pertama menuju hari yang lebih seimbang dan terarah.', footer: 'Ruang untuk merencanakan hari dan memahami kapasitasmu.',
+  },
+  en: {
+    moduleNav: 'Modules', pickerHint: 'Choose a module to see what it does.',
+    moduleNames: ['Tasks', 'PULIH', 'REST', 'NOURISH', 'Energy', 'Assistant', 'Pantry', 'Reports'],
+    nav: ['Home', 'Features', 'How It Works', 'About'], menu: 'Menu', primary: 'Get Started', explore: 'Explore Features',
+    eyebrow: 'YOUR LIFE, IN BALANCE.', hero: 'Plan tasks around your energy, notice your mood, and make time for rest and meals.', photo: 'A still lake between mist-covered forested mountains.',
+    intro: 'One space for a more balanced life.', introText: 'Bring tasks, mood, sleep, nutrition, and daily energy together. ARAH helps you make decisions around your capacity so each step feels manageable.',
+    benefitsTitle: 'A daily rhythm that fits you.', benefits: [['Plan Smarter', 'Organize tasks around deadlines, time, and available energy.'], ['Feel Better', 'Notice your mood, stress, and energy with brief check-ins.'], ['Rest Well', 'Build a sleep routine and understand your rest patterns.'], ['Eat Mindfully', 'Find meal ideas that fit your budget, time, and ingredients.']],
+    features: 'What would you like to plan today?', modules: [
+      ['Adaptive Task Planner', 'Choose a manageable task.', 'Set priorities based on deadlines, time, and available energy.'],
+      ['PULIH', 'Make room to recover.', 'Track mood and stress, then explore nonclinical recovery activities.'],
+      ['REST', 'Build a sleep rhythm.', 'Track sleep duration and set realistic sleep goals.'],
+      ['NOURISH', 'Find practical meal ideas.', 'Explore meals based on nutrition, cooking time, budget, and ingredients.'],
+      ['Personal Energy Budget', 'Match work to your energy.', 'Understand daily capacity and plan a workload you can manage.'],
+      ['Smart Decision Assistant', 'Find your next step.', 'See a suggested action and why it could fit your current situation.'],
+      ['Smart Meal Budget & Pantry', 'Cook with what you have.', 'Track ingredients, notice what is missing, and estimate meal costs.'],
+      ['Weekly Life Balance Report', 'See patterns across the week.', 'Review tasks, sleep, mood, energy, and food choices together.'],
+    ],
+    how: 'Start with how you feel today.', steps: [['Check In', 'Share how you feel, your energy, and the time you have.'], ['Plan Your Day', 'Organize activities and consider suggestions suited to your situation.'], ['Find Your Balance', 'Make time for tasks, rest, and meals, then review your progress.']],
+    why: 'Why ARAH?', whyText: 'Your capacity changes from day to day. ARAH is designed to bring together plans that fit your energy, suggestions that fit your situation, meals that fit your budget, and a weekly view of your progress.', trust: 'Privacy and wellbeing', trustText: 'Wellbeing records are intended to stay private and under users’ control. Suggestions are nonclinical. ARAH supports balanced habits and does not provide medical or psychological diagnoses.',
+    final: 'A better day starts with ARAH.', finalText: 'Take the first step toward a more balanced and intentional daily life.', footer: 'A space to plan your day and understand your capacity.',
+  },
+} satisfies Record<'id' | 'en', object>
+
+export type LandingCopy = (typeof landing)['id']

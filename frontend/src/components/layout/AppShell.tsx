@@ -1,5 +1,5 @@
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import { Leaf, Moon, Sun, LayoutDashboard, ListTodo, Heart, Bed, Utensils, Package, Compass, ChartNoAxesCombined, Settings, Users, BookOpen, Carrot, Coins } from 'lucide-react'
 import { usePreferences } from '../../app/providers/Preferences'
 import type { MessageKey } from '../../locales/messages'
@@ -12,16 +12,20 @@ export function Controls() {
   return <div className="controls"><button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`${t('theme')}: ${t(theme)}`} aria-pressed={theme === 'dark'}>{theme === 'light' ? <Moon size={18}/> : <Sun size={18}/>}<span>{t(theme)}</span></button><label><span className="sr-only">{t('language')}</span><select value={language} onChange={event => setLanguage(event.target.value as 'id' | 'en')}><option value="id">Indonesia</option><option value="en">English</option></select></label></div>
 }
 export function Brand() { return <Link to="/" className="brand"><Leaf aria-hidden="true"/><span>ARAH<small>Stay Productive, Stay Human</small></span></Link> }
-function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; prefix: string }>) {
-  const { t, language } = usePreferences()
-  const { pathname } = useLocation()
+export function MobileBrandHeader({ href = '/' }: Readonly<{ href?: string }>) {
+  const mark = <><span className="mobile-brand-mark"><Leaf size={19} aria-hidden="true"/></span><span>ARAH</span></>
+  return <header className="mobile-brand-header">
+    {href.startsWith('#') ? <a href={href}>{mark}</a> : <Link to={href}>{mark}</Link>}
+  </header>
+}
+export function CapsuleNavigation({ activePage, label, className = '', children }: Readonly<{ activePage?: string; label: string; className?: string; children: ReactNode }>) {
+  const { language } = usePreferences()
   const navRef = useRef<HTMLElement>(null)
   const indicatorRef = useRef<HTMLSpanElement>(null)
   const indicatorAnimation = useRef<Animation | null>(null)
   const positioned = useRef(false)
   const targetGeometry = useRef({ x: 0, width: 0 })
   const positions = useRef(new Map<string, number>())
-  const activePage = pages.find(page => pathname === prefix + page)
 
   useLayoutEffect(() => {
     const nav = navRef.current
@@ -60,7 +64,8 @@ function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; pre
         ], { duration: 340, easing: 'ease-in-out' })
       }
       nav.querySelectorAll<HTMLAnchorElement>('a').forEach(link => {
-        const oldX = positions.current.get(link.pathname)
+        const destination = link.pathname + link.hash
+        const oldX = positions.current.get(destination)
         const transform = getComputedStyle(link).transform
         const translation = transform === 'none' ? 0 : new DOMMatrixReadOnly(transform).m41
         const delta = oldX === undefined ? 0 : oldX + translation - link.offsetLeft
@@ -69,7 +74,7 @@ function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; pre
           link.animate([{ transform: `translateX(${delta}px)` }, { transform: 'translateX(0)' }],
             { duration: 260, easing: 'cubic-bezier(.4, 0, .2, 1)' })
         }
-        positions.current.set(link.pathname, link.offsetLeft)
+        positions.current.set(destination, link.offsetLeft)
       })
       positioned.current = true
     }
@@ -79,10 +84,20 @@ function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; pre
     const active = nav.querySelector('a.active')
     if (active) observer?.observe(active)
     return () => observer?.disconnect()
-  }, [pathname, language])
+  }, [activePage, language])
 
-  return <nav ref={navRef} className="bottom-nav" aria-label={t('mobileNavigation')}>
+  return <nav ref={navRef} className={`bottom-nav ${className}`} aria-label={label}>
     <span ref={indicatorRef} className="bottom-nav__indicator" data-tone={activePage} aria-hidden="true"/>
+    {children}
+  </nav>
+}
+
+function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; prefix: string }>) {
+  const { t } = usePreferences()
+  const { pathname } = useLocation()
+  const activePage = pages.find(page => pathname.replace(/\/$/, '') === prefix + page)
+
+  return <CapsuleNavigation activePage={activePage} label={t('mobileNavigation')}>
     {pages.map(page => {
       const Icon = icons[page as keyof typeof icons]
       return <NavLink className="bottom-nav__item" key={page} to={prefix + page} data-tone={page} aria-label={t(page)} title={t(page)}>
@@ -90,7 +105,7 @@ function MobileNavigation({ pages, prefix }: Readonly<{ pages: MessageKey[]; pre
         <span className="bottom-nav__label" aria-hidden="true">{t(page)}</span>
       </NavLink>
     })}
-  </nav>
+  </CapsuleNavigation>
 }
 export function AppShell() {
   const admin = useLocation().pathname.startsWith('/admin')
@@ -98,5 +113,23 @@ export function AppShell() {
   const pages = admin ? adminPages : userPages
   const prefix = admin ? '/admin/' : '/app/'
   const mobilePages: MessageKey[] = admin ? pages : [...pages.slice(0, 4), 'settings']
-  return <div className="app-shell"><a className="skip-link" href="#main">{t('skip')}</a><aside className="sidebar"><Brand/><p className="eyebrow">{admin ? t('admin') : 'Adaptive Recovery & Achievement Hub'}</p><nav aria-label={admin ? t('admin') : 'ARAH'}>{pages.map(page => { const Icon = icons[page as keyof typeof icons]; return <NavLink to={prefix + page} key={page}><Icon size={19}/>{t(page)}</NavLink> })}</nav><Link className="subtle-link" to={admin ? '/app/dashboard' : '/admin/dashboard'}>{admin ? t('dashboard') : t('admin')} ↗</Link></aside><div className="workspace"><header className="topbar"><span className="eyebrow">{t('foundation')}</span><Controls/></header><main id="main" tabIndex={-1}><p className="preview-note">{t('preview')}</p><Outlet/></main><footer>ARAH · TECHCOMFEST 2027</footer></div><MobileNavigation pages={mobilePages} prefix={prefix}/></div>
+  return <div className="app-shell">
+    <a className="skip-link" href="#main">{t('skip')}</a>
+    <aside className="sidebar">
+      <Brand/>
+      <p className="eyebrow">{admin ? t('admin') : 'Adaptive Recovery & Achievement Hub'}</p>
+      <nav aria-label={admin ? t('admin') : 'ARAH'}>{pages.map(page => {
+        const Icon = icons[page as keyof typeof icons]
+        return <NavLink to={prefix + page} key={page}><Icon size={19} aria-hidden="true"/>{t(page)}</NavLink>
+      })}</nav>
+      <Link className="subtle-link" to={admin ? '/app/dashboard' : '/admin/dashboard'}>{admin ? t('dashboard') : t('admin')} ↗</Link>
+    </aside>
+    <div className="workspace">
+      <MobileBrandHeader/>
+      <div className="topbar"><span className="workspace-caption">{admin ? t('admin') : 'Adaptive Recovery & Achievement Hub'}</span><Controls/></div>
+      <main id="main" tabIndex={-1}><p className="preview-note">{t('preview')}</p><Outlet/></main>
+      <footer>ARAH · TECHCOMFEST 2027</footer>
+    </div>
+    <MobileNavigation pages={mobilePages} prefix={prefix}/>
+  </div>
 }

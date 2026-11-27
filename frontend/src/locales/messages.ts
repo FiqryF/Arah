@@ -1,6 +1,7 @@
 export const messages = {
   id: {
     mobileNavigation: 'Navigasi utama',
+    modules: 'Modul ARAH',
     dashboard: 'Beranda', tasks: 'Rencana tugas', pulih: 'PULIH', rest: 'REST', nourish: 'NOURISH', pantry: 'Dapur & anggaran', assistant: 'Asisten keputusan', reports: 'Laporan mingguan', settings: 'Pengaturan',
     users: 'Pengguna', recipes: 'Resep', ingredients: 'Bahan makanan', prices: 'Harga pangan',
     welcome: 'Ruang untuk maju. Waktu untuk pulih.', intro: 'Produktivitas dan kesejahteraan, berjalan beriringan.',
@@ -13,6 +14,7 @@ export const messages = {
   },
   en: {
     mobileNavigation: 'Main navigation',
+    modules: 'ARAH modules',
     dashboard: 'Dashboard', tasks: 'Task planner', pulih: 'PULIH', rest: 'REST', nourish: 'NOURISH', pantry: 'Pantry & budget', assistant: 'Decision assistant', reports: 'Weekly report', settings: 'Settings',
     users: 'Users', recipes: 'Recipes', ingredients: 'Ingredients', prices: 'Food prices',
     welcome: 'Room to grow. Time to recover.', intro: 'Productivity and wellbeing, moving together.',
